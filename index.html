@@ -3,82 +3,91 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Shop • Nemokama Parduotuvė</title>
+  <title>El Shop • Parduotuvė</title>
   <style>
     body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 20px; text-align: center; }
     .container { max-width: 900px; margin: 0 auto; }
     h1 { color: #38bdf8; margin-bottom: 5px; }
     p.sub { color: #94a3b8; margin-bottom: 40px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-    .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; transition: 0.2s; }
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; transition: 0.2s; text-align: left; }
     .card:hover { border-color: #38bdf8; transform: translateY(-4px); }
-    .price { font-size: 1.5rem; font-weight: bold; color: #22c55e; margin: 15px 0; text-decoration: line-through; color: #64748b; }
-    .free-tag { font-size: 1.2rem; font-weight: bold; color: #38bdf8; margin: 15px 0; }
-    .btn { background: #2563eb; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
+    .card h3 { margin-top: 0; color: #f8fafc; }
+    .price { font-size: 1.2rem; font-weight: bold; color: #22c55e; margin: 15px 0; }
+    .btn { background: #2563eb; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; }
     .btn:hover { background: #1d4ed8; }
-    #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
-    .modal-box { background: #1e293b; padding: 30px; border-radius: 12px; max-width: 450px; border: 1px solid #38bdf8; text-align: left; }
+    
+    /* Iššokantis langas (Modal) */
+    #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 100; }
+    .modal-box { background: #1e293b; padding: 30px; border-radius: 12px; max-width: 450px; width: 90%; border: 1px solid #38bdf8; text-align: left; position: relative; }
     .modal-box h2 { color: #38bdf8; margin-top: 0; }
-    .code-box { background: #0f172a; padding: 10px; border-radius: 6px; font-family: monospace; color: #38bdf8; margin: 15px 0; word-break: break-all; }
+    .result-box { background: #0f172a; padding: 15px; border-radius: 8px; font-family: monospace; color: #22c55e; margin: 15px 0; word-break: break-all; border: 1px dashed #22c55e; font-size: 1.1rem; text-align: center; }
+    .close-x { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; }
+    .close-x:hover { color: white; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>🛒 EL SHOP</h1>
-    <p class="sub">Specialus išankstinis išbandymas – visos prekės dabar visiškai nemokamai (kortelės nereikia!)</p>
+    <p class="sub">Oficiali skaitmeninių prekių parduotuvė • Viskas gaunama iškart ekrane!</p>
     
     <div class="grid">
+      <!-- 1 Prekė -->
       <div class="card">
         <h3>Discord Nitro (1 mėn.)</h3>
-        <p>Pilna Nitro prenumerata su Boostais</p>
-        <div class="price">4.99 €</div>
-        <div class="free-tag">NEMOKAMAI (0.00 €)</div>
-        <button class="btn" onclick="openModal('Discord Nitro (1 mėn.)')">Gauti nemokamai</button>
+        <p style="color: #94a3b8; font-size: 0.9rem;">Pilna Nitro prenumerata su Boostais. Pristatymas iškart.</p>
+        <div class="price">NEMOKAMAI (0.00 €)</div>
+        <button class="btn" onclick="buyItem('Discord Nitro (1 mėn.)', 'NITRO-GIFT-9842-FREE-2026')">Pirkti / Gauti iškart</button>
       </div>
 
+      <!-- 2 Prekė -->
       <div class="card">
         <h3>Spotify Premium (12 mėn.)</h3>
-        <p>Individualus planas be reklamų</p>
-        <div class="price">14.99 €</div>
-        <div class="free-tag">NEMOKAMAI (0.00 €)</div>
-        <button class="btn" onclick="openModal('Spotify Premium (12 mėn.)')">Gauti nemokamai</button>
+        <p style="color: #94a3b8; font-size: 0.9rem;">Individualus planas be jokių reklamų.</p>
+        <div class="price">NEMOKAMAI (0.00 €)</div>
+        <button class="btn" onclick="buyItem('Spotify Premium (12 mėn.)', 'SPOTIFY-PREM-CODE-7731-LT')">Pirkti / Gauti iškart</button>
       </div>
 
+      <!-- 3 Prekė -->
       <div class="card">
         <h3>VIP Prieiga + 1000 XP</h3>
-        <p>Išskirtinės nuolaidos ir privilegijos</p>
-        <div class="price">9.99 €</div>
-        <div class="free-tag">NEMOKAMAI (0.00 €)</div>
-        <button class="btn" onclick="openModal('VIP Prieiga + 1000 XP')">Gauti nemokamai</button>
+        <p style="color: #94a3b8; font-size: 0.9rem;">Išskirtinės teisės ir privilegijos parduotuvėje.</p>
+        <div class="price">NEMOKAMAI (0.00 €)</div>
+        <button class="btn" onclick="buyItem('VIP Prieiga + 1000 XP', 'VIP-ACCESS-KEY-5519-ELSHOP')">Pirkti / Gauti iškart</button>
       </div>
     </div>
   </div>
 
+  <!-- Rezultato langas -->
   <div id="modal">
     <div class="modal-box">
-      <h2>🎉 Prekė paruošta!</h2>
-      <p>Jūs pasirinkote: <b id="itemName" style="color: #22c55e;"></b></p>
-      <p><b>Jokios kortelės nereikia!</b> Norėdami gauti šią prekę nemokamai, nukopijuokite kodą ir atidukite bilietą Discord serveryje.</p>
+      <button class="close-x" onclick="closeModal()">&times;</button>
+      <h2>🎉 Užsakymas sėkmingas!</h2>
+      <p>Jūsų įsigyta prekė: <b id="boughtItemName" style="color: #f8fafc;"></b></p>
+      <p style="font-size: 0.9rem; color: #94a3b8;">Jūsų slapta prekė / aktyvacijos kodas:</p>
       
-      <div class="code-box" id="orderCode">ELSHOP-FREE-000</div>
+      <div class="result-box" id="boughtCode"></div>
       
-      <button class="btn" onclick="copyCode()" style="margin-bottom: 10px; background: #16a34a;">Nukopijuoti kodą</button>
-      <button class="btn" onclick="document.getElementById('modal').style.display='none'" style="background: #475569;">Uždaryti</button>
+      <button class="btn" onclick="copyResultCode()" style="background: #16a34a; margin-bottom: 10px;">Nukopijuoti kodą</button>
+      <button class="btn" onclick="closeModal()" style="background: #475569;">Uždaryti</button>
     </div>
   </div>
 
   <script>
-    function openModal(item) {
-      document.getElementById('itemName').innerText = item;
-      const randomCode = 'ELSHOP-' + Math.floor(100000 + Math.random() * 900000);
-      document.getElementById('orderCode').innerText = randomCode + ' (' + item + ')';
+    function buyItem(itemName, itemCode) {
+      document.getElementById('boughtItemName').innerText = itemName;
+      document.getElementById('boughtCode').innerText = itemCode;
       document.getElementById('modal').style.display = 'flex';
     }
 
-    function copyCode() {
-      const text = document.getElementById('orderCode').innerText;
-      navigator.clipboard.writeText(text);
-      alert('Kodas nukopijuotas! Eikite į Discord kanalą #pagalba, sukursite bilietą ir gausite prekę.');
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    function copyResultCode() {
+      const codeText = document.getElementById('boughtCode').innerText;
+      navigator.clipboard.writeText(codeText);
+      alert('Kodas sėkmingai nukopijuotas į iškarpinę!');
     }
   </script>
 </body>
