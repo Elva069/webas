@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Shop • Oficiali Parduotuvė</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 20px; text-align: center; }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { color: #38bdf8; margin-bottom: 5px; }
+    p.sub { color: #94a3b8; margin-bottom: 40px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; transition: 0.2s; }
+    .card:hover { border-color: #38bdf8; transform: translateY(-4px); }
+    .price { font-size: 1.5rem; font-weight: bold; color: #22c55e; margin: 15px 0; }
+    .btn { background: #2563eb; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
+    .btn:hover { background: #1d4ed8; }
+    #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
+    .modal-box { background: #1e293b; padding: 30px; border-radius: 12px; max-width: 400px; border: 1px solid #38bdf8; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🛒 EL SHOP</h1>
+    <p class="sub">Greitas ir saugus prekių pristatymas per mūsų Discord sistemą</p>
+    <div class="grid">
+      <div class="card">
+        <h3>Discord Nitro (1 mėn.)</h3>
+        <p>Pilna Nitro prenumerata su 2 Boostais</p>
+        <div class="price">4.99 €</div>
+        <button class="btn" onclick="buy('Discord Nitro (1 mėn.)')">Pirkti dabar</button>
+      </div>
+      <div class="card">
+        <h3>Spotify Premium (12 mėn.)</h3>
+        <p>Individualus planas be reklamų</p>
+        <div class="price">14.99 €</div>
+        <button class="btn" onclick="buy('Spotify Premium (12 mėn.)')">Pirkti dabar</button>
+      </div>
+      <div class="card">
+        <h3>VIP Prieiga + 1000 XP</h3>
+        <p>Išskirtinės nuolaidos ir greitesnis lygio kilimas</p>
+        <div class="price">9.99 €</div>
+        <button class="btn" onclick="buy('VIP Prieiga')">Pirkti dabar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal">
+    <div class="modal-box">
+      <h2>Užsakymas paruoštas!</h2>
+      <p id="itemText"></p>
+      <p style="font-size: 0.9rem; color: #94a3b8;">Grįžkite į Discord kanalą <b>#produktai</b> arba <b>#pagalba</b>, spauskite mygtuką „Pirkti / Užsakyti“ ir pasirinkite šią prekę!</p>
+      <button class="btn" onclick="document.getElementById('modal').style.display='none'">Supratau</button>
+    </div>
+  </div>
+
+  <script>
+    function buy(item) {
+      document.getElementById('itemText').innerText = 'Pasirinkta prekė: ' + item;
+      document.getElementById('modal').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
