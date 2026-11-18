@@ -25,32 +25,41 @@
       text-align: center;
     }
 
-    .container { max-width: 950px; margin: 0 auto; animation: fadeIn 0.8s ease-out; }
-    h1 { color: var(--accent); margin-bottom: 5px; font-size: 2.5rem; }
-    p.sub { color: var(--muted); margin-bottom: 30px; font-size: 1.1rem; }
+    /* Prisijungimo ekranas, kai vartotojas neprisijungęs */
+    #loginOverlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--bg); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 1000;
+    }
+    #loginOverlay h1 { color: var(--accent); font-size: 3rem; margin-bottom: 10px; }
+    #loginOverlay p { color: var(--muted); margin-bottom: 30px; font-size: 1.2rem; }
 
-    /* Discord Profilio viršus */
-    .user-bar {
-      background: var(--card-bg);
-      padding: 10px 20px;
-      border-radius: 50px;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 35px;
-      border: 1px solid #334155;
-    }
-    .user-bar img { width: 35px; height: 35px; border-radius: 50%; }
     .login-btn {
-      background: #5865F2; color: white; padding: 10px 20px; border-radius: 20px;
-      text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s;
+      background: #5865F2; color: white; padding: 14px 28px; border-radius: 12px;
+      text-decoration: none; font-weight: bold; font-size: 1.1rem; display: inline-flex;
+      align-items: center; gap: 10px; transition: 0.2s; box-shadow: 0 10px 25px -5px rgba(88, 101, 242, 0.4);
     }
-    .login-btn:hover { background: #4752C4; }
+    .login-btn:hover { background: #4752C4; transform: translateY(-2px); }
+
+    .container { max-width: 950px; margin: 0 auto; display: none; } /* Paslėpta kol neprisijungė */
+    
+    .header-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 30px; background: var(--card-bg); padding: 15px 25px;
+      border-radius: 16px; border: 1px solid #334155;
+    }
+    .header-bar h1 { color: var(--accent); margin: 0; font-size: 1.8rem; }
+
+    .user-profile {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .user-profile img { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--accent); }
+    .user-profile span { font-weight: bold; color: var(--text); }
 
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
     .card {
       background: var(--card-bg); border: 1px solid #334155; border-radius: 16px;
-      padding: 25px; text-align: left; transition: all 0.3s ease; position: relative;
+      padding: 25px; text-align: left; transition: all 0.3s ease;
     }
     .card:hover { border-color: var(--accent); transform: translateY(-6px); box-shadow: 0 12px 30px -10px rgba(56, 189, 248, 0.2); }
     .card h3 { margin-top: 0; color: var(--text); font-size: 1.3rem; }
@@ -63,10 +72,11 @@
     }
     .btn:hover { background: var(--accent-hover); box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
 
+    /* Modals */
     .modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px);
-      align-items: center; justify-content: center; z-index: 100;
+      align-items: center; justify-content: center; z-index: 2000;
     }
     .modal-box {
       background: var(--card-bg); padding: 35px; border-radius: 20px; max-width: 460px;
@@ -74,17 +84,10 @@
     }
     .modal-box h2 { color: var(--accent); margin-top: 0; }
     .close-x { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--muted); font-size: 1.8rem; cursor: pointer; }
-    .pay-methods { display: flex; gap: 12px; margin: 20px 0; }
-    .pay-btn {
-      flex: 1; background: #334155; border: 2px solid transparent; color: var(--text);
-      padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600;
-    }
-    .pay-btn.active { border-color: var(--accent); background: #1e293b; }
     .result-box {
       background: #0b0f19; padding: 15px; border-radius: 10px; font-family: monospace;
       color: var(--success); margin: 15px 0; word-break: break-all; border: 1px dashed var(--success); text-align: center;
     }
-
     .form-group { margin-bottom: 15px; }
     .form-group label { display: block; margin-bottom: 6px; font-size: 0.9rem; color: var(--muted); }
     .form-control { width: 100%; background: #0b0f19; border: 1px solid #334155; color: var(--text); padding: 12px; border-radius: 8px; box-sizing: border-box; }
@@ -95,20 +98,26 @@
     }
     .rep-option.pos.active { background: rgba(34, 197, 94, 0.2); border-color: var(--success); color: var(--success); }
     .rep-option.neg.active { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); color: var(--danger); }
-
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <!-- Privalomas prisijungimo ekranas, kol neprisijungęs -->
+  <div id="loginOverlay">
     <h1>🛒 EL SHOP</h1>
-    <p class="sub">Oficiali skaitmeninių prekių parduotuvė</p>
-    
-    <!-- Discord prisijungimo vieta -->
-    <div id="authSection">
-      <a href="https://discord.com/api/oauth2/authorize?client_id=1534503167214096595&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&response_type=token&scope=identify" class="login-btn">
-        Prisijungti su Discord
-      </a>
+    <p>Norėdami matyti parduotuvę, privalote prisijungti su savo Discord paskyra.</p>
+    <a href="https://discord.com/api/oauth2/authorize?client_id=TAVO_BOT_CLIENT_ID&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&response_type=token&scope=identify" class="login-btn">
+      Prisijungti su Discord
+    </a>
+  </div>
+
+  <!-- Pagrindinis turinys (rodomas tik prisijungus) -->
+  <div class="container" id="mainContent">
+    <div class="header-bar">
+      <h1>🛒 EL SHOP</h1>
+      <div class="user-profile" id="userProfileArea">
+        <!-- Čia per JS įsikels ikona ir vardas -->
+      </div>
     </div>
 
     <div class="grid">
@@ -183,34 +192,51 @@
     let currentCode = '';
     let selectedRep = '+rep';
 
-    // Kai puslis užsikrauna, patikriname ar grįžo token iš Discord OAuth2
+    // Kai puslapis užsikrauna, tikriname OAuth2 token
     window.onload = () => {
       const fragment = new URLSearchParams(window.location.hash.slice(1));
       const accessToken = fragment.get('access_token');
 
       if (accessToken) {
+        // Išsaugom sessionStorage, kad nereikėtų jungtis iš naujo atnaujinus puslapį
+        sessionStorage.setItem('discord_token', accessToken);
+        window.location.hash = ''; // Išvalom URL
+      }
+
+      const token = accessToken || sessionStorage.getItem('discord_token');
+
+      if (token) {
         fetch('https://discord.com/api/users/@me', {
-          headers: { authorization: `Bearer ${accessToken}` }
+          headers: { authorization: `Bearer ${token}` }
         })
         .then(res => res.json())
         .then(data => {
-          discordUser = data;
-          const avatarUrl = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`;
-          document.getElementById('authSection').innerHTML = `
-            <div class="user-bar">
+          if (data.id) {
+            discordUser = data;
+            const avatarUrl = data.avatar 
+              ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png` 
+              : 'https://cdn.jsdelivr.net/npm/@mdi/svg@7.2.96/svg/account.svg';
+
+            // Parodome parduotuvę, paslėpiame prisijungimo ekraną
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+
+            // Viršuje įkeliame vartotojo profiką ir ikoną
+            document.getElementById('userProfileArea').innerHTML = `
               <img src="${avatarUrl}" alt="Avatar">
-              <span><b>${data.username}</b> (Prisijungta)</span>
-            </div>
-          `;
+              <span>${data.username}</span>
+            `;
+          } else {
+            sessionStorage.removeItem('discord_token');
+          }
+        })
+        .catch(() => {
+          sessionStorage.removeItem('discord_token');
         });
       }
     };
 
     function openCheckout(itemName, itemCode) {
-      if (!discordUser) {
-        alert('❌ Norėdami pirkti, pirmiausia prisijunkite su Discord viršuje!');
-        return;
-      }
       currentItem = itemName;
       currentCode = itemCode;
       document.getElementById('checkoutItemName').innerText = itemName;
@@ -237,7 +263,6 @@
     async function submitReview() {
       const comment = document.getElementById('reviewerComment').value.trim() || 'Puiku!';
       
-      // Siunčiame tiesiai į mūsų botą, kuris įrašys į Discord #atsiliepimai kanalą
       try {
         const res = await fetch('http://localhost:3000/api/review', {
           method: 'POST',
