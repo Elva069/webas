@@ -41,7 +41,7 @@
     }
     .login-btn:hover { background: #4752C4; transform: translateY(-2px); }
 
-    .container { max-width: 950px; margin: 0 auto; display: none; } /* Paslėpta kol neprisijungė */
+    .container { max-width: 950px; margin: 0 auto; display: none; }
     
     .header-bar {
       display: flex; justify-content: space-between; align-items: center;
@@ -53,7 +53,7 @@
     .user-profile {
       display: flex; align-items: center; gap: 12px;
     }
-    .user-profile img { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--accent); }
+    .user-profile img { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
     .user-profile span { font-weight: bold; color: var(--text); }
 
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
@@ -106,17 +106,17 @@
   <div id="loginOverlay">
     <h1>🛒 EL SHOP</h1>
     <p>Norėdami matyti parduotuvę, privalote prisijungti su savo Discord paskyra.</p>
-    <a href="https://discord.com/api/oauth2/authorize?client_id=1534503167214096595&redirect_uri=https%3A%2F%2Fwebas-alpha.vercel.app%2F&response_type=token&scope=identify" class="login-btn">class="login-btn">
+    <a href="https://discord.com/api/oauth2/authorize?client_id=1534503167214096595&redirect_uri=https%3A%2F%2Fwebas-alpha.vercel.app&response_type=token&scope=identify" class="login-btn">
       Prisijungti su Discord
     </a>
   </div>
 
-  <!-- Pagrindinis turinys (rodomas tik prisijungus) -->
+  <!-- Pagrindinis turinys -->
   <div class="container" id="mainContent">
     <div class="header-bar">
       <h1>🛒 EL SHOP</h1>
       <div class="user-profile" id="userProfileArea">
-        <!-- Čia per JS įsikels ikona ir vardas -->
+        <!-- Čia įsikels ikona ir vardas -->
       </div>
     </div>
 
@@ -192,15 +192,13 @@
     let currentCode = '';
     let selectedRep = '+rep';
 
-    // Kai puslapis užsikrauna, tikriname OAuth2 token
     window.onload = () => {
       const fragment = new URLSearchParams(window.location.hash.slice(1));
       const accessToken = fragment.get('access_token');
 
       if (accessToken) {
-        // Išsaugom sessionStorage, kad nereikėtų jungtis iš naujo atnaujinus puslapį
         sessionStorage.setItem('discord_token', accessToken);
-        window.location.hash = ''; // Išvalom URL
+        window.location.hash = '';
       }
 
       const token = accessToken || sessionStorage.getItem('discord_token');
@@ -215,13 +213,11 @@
             discordUser = data;
             const avatarUrl = data.avatar 
               ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png` 
-              : 'https://cdn.jsdelivr.net/npm/@mdi/svg@7.2.96/svg/account.svg';
+              : 'https://cdn.discord.com/embed/avatars/0.png';
 
-            // Parodome parduotuvę, paslėpiame prisijungimo ekraną
             document.getElementById('loginOverlay').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
 
-            // Viršuje įkeliame vartotojo profiką ir ikoną
             document.getElementById('userProfileArea').innerHTML = `
               <img src="${avatarUrl}" alt="Avatar">
               <span>${data.username}</span>
@@ -263,8 +259,12 @@
     async function submitReview() {
       const comment = document.getElementById('reviewerComment').value.trim() || 'Puiku!';
       
+      // PASTABA: Jei serveris veikia tik tavo kompiuteryje (localhost), Vercel puslapis jo nepasieks.
+      // Kol testuoji lokaliai, svetainę turėtum atidaryti per http://localhost:3000 (jei ten paleistas express).
+      const API_URL = 'http://localhost:3000/api/review'; 
+
       try {
-        const res = await fetch('http://localhost:3000/api/review', {
+        const res = await fetch(API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -282,7 +282,7 @@
           alert('❌ Klaida siunčiant atsiliepimą.');
         }
       } catch (err) {
-        alert('❌ Nepavyko susisiekti su serveriu.');
+        alert('❌ Nepavyko susisiekti su serveriu. (Ar paleistas node index.js?)');
       }
     }
 
