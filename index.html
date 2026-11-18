@@ -143,17 +143,19 @@
     <div class="section-title">Produktai</div>
     <div class="section-desc">Čia rasi produktus iš mūsų katalogo – asortimentą nuolat pildome naujomis prekėmis.</div>
 
+    <!-- Filtrai -->
     <div class="filters">
-      <button class="filter-btn active">📦 In Stock</button>
-      <button class="filter-btn">🕶️ Akiniai</button>
-      <button class="filter-btn">💼 Piniginės</button>
-      <button class="filter-btn">🎒 Kuprinės</button>
-      <button class="filter-btn">👜 Rankinės</button>
-      <button class="filter-btn">💍 Apyrankė</button>
+      <button class="filter-btn active" onclick="filterProducts('all', this)">📦 Viskas (In Stock)</button>
+      <button class="filter-btn" onclick="filterProducts('akiniai', this)">🕶️ Akiniai</button>
+      <button class="filter-btn" onclick="filterProducts('pinigines', this)">💼 Piniginės</button>
+      <button class="filter-btn" onclick="filterProducts('kuprines', this)">🎒 Kuprinės</button>
+      <button class="filter-btn" onclick="filterProducts('rankines', this)">👜 Rankinės</button>
+      <button class="filter-btn" onclick="filterProducts('apyrankes', this)">💍 Apyrankė</button>
     </div>
 
-    <div class="product-grid">
-      <div class="product-card">
+    <!-- Prekių sąrašas su data-category atributais filtravimui -->
+    <div class="product-grid" id="productGrid">
+      <div class="product-card" data-category="striukes">
         <div class="product-img">
           <span class="badge stock">In Stock</span>
           <img src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=500&q=80" alt="Puffer">
@@ -165,7 +167,7 @@
         </div>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-category="striukes">
         <div class="product-img">
           <span class="badge stock">In Stock</span>
           <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=500&q=80" alt="Ralph Lauren">
@@ -177,7 +179,7 @@
         </div>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-category="striukes">
         <div class="product-img">
           <span class="badge stock">In Stock</span>
           <img src="https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=500&q=80" alt="TNF">
@@ -189,7 +191,7 @@
         </div>
       </div>
 
-      <div class="product-card">
+      <div class="product-card" data-category="kuprines">
         <div class="product-img">
           <span class="badge sold">Išparduota</span>
           <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=500&q=80" alt="Bag">
@@ -198,6 +200,30 @@
           <div class="product-name">Nike Elite Bag</div>
           <div class="product-price">€35.00</div>
           <button class="buy-btn" style="background:#27272a; color:#a1a1aa; cursor:not-allowed;">Išparduota</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="akiniai">
+        <div class="product-img">
+          <span class="badge stock">In Stock</span>
+          <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=500&q=80" alt="Akiniai">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Designer Sunglasses</div>
+          <div class="product-price">€25.00</div>
+          <button class="buy-btn" onclick="openCheckout('Designer Sunglasses')">Pirkti</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="apyrankes">
+        <div class="product-img">
+          <span class="badge stock">In Stock</span>
+          <img src="https://images.unsplash.com/photo-1611591475294-1a3b5a452a3b?auto=format&fit=crop&w=500&q=80" alt="Apyrankė">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Lacoste Style Bracelet</div>
+          <div class="product-price">€12.00</div>
+          <button class="buy-btn" onclick="openCheckout('Lacoste Style Bracelet')">Pirkti</button>
         </div>
       </div>
     </div>
@@ -216,7 +242,7 @@
     <div class="modal-box">
       <button class="close-x" onclick="closeModals()">&times;</button>
       <h2>🎉 Užsakymas priimtas!</h2>
-      <p style="color: var(--muted); font-size: 0.9rem;">Sėkmingai atsiskaityta. Norite palikti atsiliepimą?</p>
+      <p style="color: var(--muted); font-size: 0.9rem;">Sėkmingai atsiskaityta! Tau automatiškai suteikta **Pirkejas** rolė.</p>
       <button class="buy-btn" onclick="openReviewModal()" style="margin-top: 15px;">⭐ Palikti atsiliepimą</button>
     </div>
   </div>
@@ -286,14 +312,46 @@
 
     window.onload = checkAuthAndLoad;
 
+    // Filtravimo funkcija
+    function filterProducts(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        if (category === 'all') {
+          card.style.display = 'flex';
+        } else {
+          const cardCat = card.getAttribute('data-category');
+          if (cardCat === category) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        }
+      });
+    }
+
     function openCheckout(itemName) {
       currentItem = itemName;
       document.getElementById('checkoutItemName').innerText = itemName;
       document.getElementById('checkoutModal').style.display = 'flex';
     }
 
-    function processPayment() {
+    async function processPayment() {
       document.getElementById('checkoutModal').style.display = 'none';
+      
+      // Siunčiame užklausą botui, kad automatiškai uždėtų rolę serveryje
+      try {
+        await fetch('http://localhost:3000/api/buy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ discordId: discordUser.id })
+        });
+      } catch (err) {
+        console.error('Nepavyko automatiškai suteikti rolės per API');
+      }
+
       document.getElementById('successModal').style.display = 'flex';
     }
 
