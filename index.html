@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stocky • Resell Shop</title>
+  <title>EL Shop • Resell Shop</title>
   <style>
     :root {
       --bg: #09090b;
@@ -52,7 +52,7 @@
       display: flex; align-items: center; gap: 10px; background: var(--card-bg);
       padding: 6px 14px; border-radius: 30px; border: 1px solid var(--border); font-size: 0.9rem; font-weight: 600;
     }
-    .user-pill img { width: 28px; height: 28px; border-radius: 50%; }
+    .user-pill img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
 
     .main-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; display: none; }
     
@@ -121,7 +121,7 @@
 <body>
 
   <div id="loginOverlay">
-    <h1>📦 Stocky Resell</h1>
+    <h1>🛒 EL Shop</h1>
     <p>Prisijunkite su savo Discord paskyra, kad pasiektumėte katalogą.</p>
     <a href="https://discord.com/api/oauth2/authorize?client_id=1534503167214096595&redirect_uri=https%3A%2F%2Fwebas-alpha.vercel.app&response_type=token&scope=identify" class="login-btn">
       Prisijungti su Discord
@@ -130,74 +130,74 @@
 
   <div class="main-container" id="mainContainer">
     <header style="margin: -40px -20px 40px -20px;">
-      <div class="logo">📦 Stocky <span>STORE</span></div>
+      <div class="logo">🛒 EL <span>SHOP</span></div>
       <nav>
-        <a class="active">Produktai[cite: 4]</a>
-        <a>Metodai[cite: 4]</a>
-        <a>Tiekėjai[cite: 4]</a>
-        <a>Akademija[cite: 4]</a>
+        <a class="active">Produktai</a>
+        <a>Metodai</a>
+        <a>Tiekėjai</a>
+        <a>Akademija</a>
       </nav>
       <div class="user-pill" id="userProfileArea"></div>
     </header>
 
-    <div class="section-title">Produktai[cite: 4]</div>
-    <div class="section-desc">Čia rasi produktus iš mūsų katalogo – asortimentą nuolat pildome naujomis prekėmis.[cite: 4]</div>
+    <div class="section-title">Produktai</div>
+    <div class="section-desc">Čia rasi produktus iš mūsų katalogo – asortimentą nuolat pildome naujomis prekėmis.</div>
 
     <div class="filters">
-      <button class="filter-btn active">📦 In Stock[cite: 4]</button>
-      <button class="filter-btn">🕶️ Akiniai[cite: 4]</button>
-      <button class="filter-btn">💼 Piniginės[cite: 4]</button>
-      <button class="filter-btn">🎒 Kuprinės[cite: 4]</button>
-      <button class="filter-btn">👜 Rankinės[cite: 4]</button>
-      <button class="filter-btn">💍 Apyrankė[cite: 4]</button>
+      <button class="filter-btn active">📦 In Stock</button>
+      <button class="filter-btn">🕶️ Akiniai</button>
+      <button class="filter-btn">💼 Piniginės</button>
+      <button class="filter-btn">🎒 Kuprinės</button>
+      <button class="filter-btn">👜 Rankinės</button>
+      <button class="filter-btn">💍 Apyrankė</button>
     </div>
 
     <div class="product-grid">
       <div class="product-card">
         <div class="product-img">
-          <span class="badge stock">In Stock[cite: 4]</span>
+          <span class="badge stock">In Stock</span>
           <img src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=500&q=80" alt="Puffer">
         </div>
         <div class="product-info">
-          <div class="product-name">Burberry Puffer Jacket 3[cite: 4]</div>
-          <div class="product-price">€65.00[cite: 4]</div>
+          <div class="product-name">Burberry Puffer Jacket 3</div>
+          <div class="product-price">€65.00</div>
           <button class="buy-btn" onclick="openCheckout('Burberry Puffer Jacket 3')">Pirkti</button>
         </div>
       </div>
 
       <div class="product-card">
         <div class="product-img">
-          <span class="badge stock">In Stock[cite: 4]</span>
+          <span class="badge stock">In Stock</span>
           <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=500&q=80" alt="Ralph Lauren">
         </div>
         <div class="product-info">
-          <div class="product-name">Ralph Lauren Puffer Jacket[cite: 4]</div>
-          <div class="product-price">€65.00[cite: 4]</div>
+          <div class="product-name">Ralph Lauren Puffer Jacket</div>
+          <div class="product-price">€65.00</div>
           <button class="buy-btn" onclick="openCheckout('Ralph Lauren Puffer Jacket')">Pirkti</button>
         </div>
       </div>
 
       <div class="product-card">
         <div class="product-img">
-          <span class="badge stock">In Stock[cite: 4]</span>
+          <span class="badge stock">In Stock</span>
           <img src="https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=500&q=80" alt="TNF">
         </div>
         <div class="product-info">
-          <div class="product-name">TNF Puffer Jacket[cite: 4]</div>
-          <div class="product-price">€50.00[cite: 4]</div>
+          <div class="product-name">TNF Puffer Jacket</div>
+          <div class="product-price">€50.00</div>
           <button class="buy-btn" onclick="openCheckout('TNF Puffer Jacket')">Pirkti</button>
         </div>
       </div>
 
       <div class="product-card">
         <div class="product-img">
-          <span class="badge sold">Išparduota[cite: 4]</span>
+          <span class="badge sold">Išparduota</span>
           <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=500&q=80" alt="Bag">
         </div>
         <div class="product-info">
-          <div class="product-name">Nike Elite Bag[cite: 4]</div>
-          <div class="product-price">€35.00[cite: 4]</div>
-          <button class="buy-btn" style="background:#27272a; color:#a1a1aa; cursor:not-allowed;">Išparduota[cite: 4]</button>
+          <div class="product-name">Nike Elite Bag</div>
+          <div class="product-price">€35.00</div>
+          <button class="buy-btn" style="background:#27272a; color:#a1a1aa; cursor:not-allowed;">Išparduota</button>
         </div>
       </div>
     </div>
@@ -245,13 +245,14 @@
     let currentItem = '';
     let selectedRep = '+rep';
 
-    window.onload = () => {
+    function checkAuthAndLoad() {
       const fragment = new URLSearchParams(window.location.hash.slice(1));
       const accessToken = fragment.get('access_token');
 
       if (accessToken) {
         sessionStorage.setItem('discord_token', accessToken);
         window.location.hash = '';
+        window.history.replaceState({}, document.title, window.location.pathname);
       }
 
       const token = accessToken || sessionStorage.getItem('discord_token');
@@ -281,7 +282,9 @@
         })
         .catch(() => sessionStorage.removeItem('discord_token'));
       }
-    };
+    }
+
+    window.onload = checkAuthAndLoad;
 
     function openCheckout(itemName) {
       currentItem = itemName;
@@ -306,7 +309,7 @@
     }
 
     async function submitReview() {
-      const comment = document.getElementById('reviewerComment'].value.trim() || 'Viskas super!';
+      const comment = document.getElementById('reviewerComment').value.trim() || 'Viskas super!';
       const API_URL = 'http://localhost:3000/api/review';
 
       try {
