@@ -23,278 +23,114 @@
       margin: 0;
       padding: 30px 20px;
       text-align: center;
-      overflow-x: hidden;
     }
 
-    .container {
-      max-width: 950px;
-      margin: 0 auto;
-      animation: fadeIn 0.8s ease-out;
-    }
+    .container { max-width: 950px; margin: 0 auto; animation: fadeIn 0.8s ease-out; }
+    h1 { color: var(--accent); margin-bottom: 5px; font-size: 2.5rem; }
+    p.sub { color: var(--muted); margin-bottom: 30px; font-size: 1.1rem; }
 
-    h1 {
-      color: var(--accent);
-      margin-bottom: 5px;
-      font-size: 2.5rem;
-      letter-spacing: -1px;
-    }
-
-    p.sub {
-      color: var(--muted);
-      margin-bottom: 40px;
-      font-size: 1.1rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-    }
-
-    .card {
+    /* Discord Profilio viršus */
+    .user-bar {
       background: var(--card-bg);
-      border: 1px solid #334155;
-      border-radius: 16px;
-      padding: 25px;
-      text-align: left;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      animation: slideUp 0.6s ease-out backwards;
-    }
-
-    .card:nth-child(1) { animation-delay: 0.1s; }
-    .card:nth-child(2) { animation-delay: 0.2s; }
-    .card:nth-child(3) { animation-delay: 0.3s; }
-
-    .card:hover {
-      border-color: var(--accent);
-      transform: translateY(-6px);
-      box-shadow: 0 12px 30px -10px rgba(56, 189, 248, 0.2);
-    }
-
-    .card h3 {
-      margin-top: 0;
-      color: var(--text);
-      font-size: 1.3rem;
-    }
-
-    .old-price {
-      font-size: 0.95rem;
-      color: var(--muted);
-      text-decoration: line-through;
-    }
-
-    .price {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--success);
-      margin: 8px 0 20px 0;
-    }
-
-    .btn {
-      background: var(--accent);
-      color: #0f172a;
-      border: none;
-      padding: 14px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 700;
-      width: 100%;
-      font-size: 1rem;
-      transition: all 0.2s ease;
-    }
-
-    .btn:hover {
-      background: var(--accent-hover);
-      transform: scale(1.02);
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
-    }
-
-    .btn:active {
-      transform: scale(0.98);
-    }
-
-    /* Animoluoti Modal langai */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(8px);
+      padding: 10px 20px;
+      border-radius: 50px;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      z-index: 100;
-      animation: fadeIn 0.3s ease-out;
-    }
-
-    .modal-box {
-      background: var(--card-bg);
-      padding: 35px;
-      border-radius: 20px;
-      max-width: 460px;
-      width: 90%;
-      border: 1px solid var(--accent);
-      text-align: left;
-      position: relative;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-      animation: scaleUp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .modal-box h2 {
-      color: var(--accent);
-      margin-top: 0;
-    }
-
-    .close-x {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: none;
-      border: none;
-      color: var(--muted);
-      font-size: 1.8rem;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    .close-x:hover { color: var(--text); }
-
-    .pay-methods {
-      display: flex;
       gap: 12px;
-      margin: 20px 0;
+      margin-bottom: 35px;
+      border: 1px solid #334155;
     }
+    .user-bar img { width: 35px; height: 35px; border-radius: 50%; }
+    .login-btn {
+      background: #5865F2; color: white; padding: 10px 20px; border-radius: 20px;
+      text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s;
+    }
+    .login-btn:hover { background: #4752C4; }
 
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+    .card {
+      background: var(--card-bg); border: 1px solid #334155; border-radius: 16px;
+      padding: 25px; text-align: left; transition: all 0.3s ease; position: relative;
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-6px); box-shadow: 0 12px 30px -10px rgba(56, 189, 248, 0.2); }
+    .card h3 { margin-top: 0; color: var(--text); font-size: 1.3rem; }
+    .old-price { font-size: 0.95rem; color: var(--muted); text-decoration: line-through; }
+    .price { font-size: 1.6rem; font-weight: 800; color: var(--success); margin: 8px 0 20px 0; }
+    
+    .btn {
+      background: var(--accent); color: #0f172a; border: none; padding: 14px 20px;
+      border-radius: 10px; cursor: pointer; font-weight: 700; width: 100%; font-size: 1rem; transition: 0.2s;
+    }
+    .btn:hover { background: var(--accent-hover); box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px);
+      align-items: center; justify-content: center; z-index: 100;
+    }
+    .modal-box {
+      background: var(--card-bg); padding: 35px; border-radius: 20px; max-width: 460px;
+      width: 90%; border: 1px solid var(--accent); text-align: left; position: relative;
+    }
+    .modal-box h2 { color: var(--accent); margin-top: 0; }
+    .close-x { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--muted); font-size: 1.8rem; cursor: pointer; }
+    .pay-methods { display: flex; gap: 12px; margin: 20px 0; }
     .pay-btn {
-      flex: 1;
-      background: #334155;
-      border: 2px solid transparent;
-      color: var(--text);
-      padding: 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.2s;
+      flex: 1; background: #334155; border: 2px solid transparent; color: var(--text);
+      padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600;
     }
-
-    .pay-btn.active {
-      border-color: var(--accent);
-      background: #1e293b;
-      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
-    }
-
+    .pay-btn.active { border-color: var(--accent); background: #1e293b; }
     .result-box {
-      background: #0b0f19;
-      padding: 15px;
-      border-radius: 10px;
-      font-family: monospace;
-      color: var(--success);
-      margin: 15px 0;
-      word-break: break-all;
-      border: 1px dashed var(--success);
-      font-size: 1.1rem;
-      text-align: center;
+      background: #0b0f19; padding: 15px; border-radius: 10px; font-family: monospace;
+      color: var(--success); margin: 15px 0; word-break: break-all; border: 1px dashed var(--success); text-align: center;
     }
 
-    /* Atsiliepimo forma modalnyje */
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    .form-control {
-      width: 100%;
-      background: #0b0f19;
-      border: 1px solid #334155;
-      color: var(--text);
-      padding: 12px;
-      border-radius: 8px;
-      box-sizing: border-box;
-      font-family: inherit;
-    }
-
-    .form-control:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    .rep-selector {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 6px; font-size: 0.9rem; color: var(--muted); }
+    .form-control { width: 100%; background: #0b0f19; border: 1px solid #334155; color: var(--text); padding: 12px; border-radius: 8px; box-sizing: border-box; }
+    .rep-selector { display: flex; gap: 10px; margin-bottom: 15px; }
     .rep-option {
-      flex: 1;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #334155;
-      background: #0b0f19;
-      color: var(--text);
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.2s;
-      text-align: center;
+      flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #334155;
+      background: #0b0f19; color: var(--text); cursor: pointer; font-weight: bold; text-align: center;
     }
-
     .rep-option.pos.active { background: rgba(34, 197, 94, 0.2); border-color: var(--success); color: var(--success); }
     .rep-option.neg.active { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); color: var(--danger); }
 
-    /* Keyframe animacijos */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes scaleUp {
-      from { opacity: 0; transform: scale(0.85); }
-      to { opacity: 1; transform: scale(1); }
-    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>🛒 EL SHOP</h1>
-    <p class="sub">Oficiali skaitmeninių prekių parduotuvė • Greitas ir saugus pristatymas</p>
+    <p class="sub">Oficiali skaitmeninių prekių parduotuvė</p>
     
+    <!-- Discord prisijungimo vieta -->
+    <div id="authSection">
+      <a href="https://discord.com/api/oauth2/authorize?client_id=TAVO_BOT_CLIENT_ID&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&response_type=token&scope=identify" class="login-btn">
+        Prisijungti su Discord
+      </a>
+    </div>
+
     <div class="grid">
-      <!-- 1 Prekė -->
       <div class="card">
         <h3>Discord Nitro (1 mėn.)</h3>
-        <p style="color: var(--muted); font-size: 0.9rem;">Pilna Nitro prenumerata su Boostais. Pristatymas iškart po apmokėjimo.</p>
+        <p style="color: var(--muted); font-size: 0.9rem;">Pilna Nitro prenumerata su Boostais.</p>
         <div class="old-price">14.99 €</div>
         <div class="price">9.00 €</div>
         <button class="btn" onclick="openCheckout('Discord Nitro (1 mėn.)', 'NITRO-GIFT-9842-PAID-2026')">Pirkti už 9 €</button>
       </div>
 
-      <!-- 2 Prekė -->
       <div class="card">
         <h3>Spotify Premium (12 mėn.)</h3>
-        <p style="color: var(--muted); font-size: 0.9rem;">Individualus planas be jokių reklamų. Metų abonementas.</p>
+        <p style="color: var(--muted); font-size: 0.9rem;">Individualus planas be jokių reklamų.</p>
         <div class="old-price">19.99 €</div>
         <div class="price">9.00 €</div>
         <button class="btn" onclick="openCheckout('Spotify Premium (12 mėn.)', 'SPOTIFY-PREM-CODE-7731-LT')">Pirkti už 9 €</button>
       </div>
 
-      <!-- 3 Prekė -->
       <div class="card">
         <h3>VIP Prieiga + 1000 XP</h3>
-        <p style="color: var(--muted); font-size: 0.9rem;">Išskirtinės teisės ir privilegijos mūsų bendruomenėje.</p>
+        <p style="color: var(--muted); font-size: 0.9rem;">Išskirtinės teisės ir privilegijos.</p>
         <div class="old-price">15.00 €</div>
         <div class="price">9.00 €</div>
         <button class="btn" onclick="openCheckout('VIP Prieiga + 1000 XP', 'VIP-ACCESS-KEY-5519-ELSHOP')">Pirkti už 9 €</button>
@@ -302,89 +138,87 @@
     </div>
   </div>
 
-  <!-- 1. Mokėjimo langas -->
+  <!-- Modals -->
   <div id="checkoutModal" class="modal">
     <div class="modal-box">
       <button class="close-x" onclick="closeModals()">&times;</button>
       <h2>🔒 Saugus apmokėjimas</h2>
-      <p>Prekė: <b id="checkoutItemName" style="color: var(--text);"></b></p>
-      <p>Suma apmokėjimui: <b style="color: var(--success);">9.00 €</b></p>
-      
-      <p style="font-size: 0.9rem; color: var(--muted); margin-top: 15px;">Pasirinkite mokėjimo būdą:</p>
-      <div class="pay-methods">
-        <button class="pay-btn active" onclick="selectPay(this)">Bankas</button>
-        <button class="pay-btn" onclick="selectPay(this)">Revolut</button>
-        <button class="pay-btn" onclick="selectPay(this)">PayPal</button>
-      </div>
-
-      <button class="btn" onclick="processPayment()" style="background: var(--success); color: white; margin-top: 10px;">Apmokėti 9.00 €</button>
+      <p>Prekė: <b id="checkoutItemName"></b></p>
+      <p>Suma: <b style="color: var(--success);">9.00 €</b></p>
+      <button class="btn" onclick="processPayment()" style="background: var(--success); color: white; margin-top: 15px;">Apmokėti 9.00 €</button>
     </div>
   </div>
 
-  <!-- 2. Sėkmingo apmokėjimo ir prekės gavimo langas -->
   <div id="successModal" class="modal">
     <div class="modal-box">
       <button class="close-x" onclick="closeModals()">&times;</button>
       <h2>🎉 Apmokėjimas sėkmingas!</h2>
-      <p>Jūsų įsigyta prekė: <b id="successItemName" style="color: var(--text);"></b></p>
-      <p style="font-size: 0.9rem; color: var(--muted);">Štai jūsų aktyvacijos kodas:</p>
-      
       <div class="result-box" id="successCode"></div>
-      
-      <button class="btn" onclick="copyResultCode()" style="margin-bottom: 10px;">Nukopijuoti kodą</button>
-      <button class="btn" onclick="openReviewModal()" style="background: #8b5cf6; color: white;">⭐ Palikti atsiliepimą (Discord)</button>
+      <button class="btn" onclick="openReviewModal()" style="background: #8b5cf6; color: white;">⭐ Palikti atsiliepimą</button>
     </div>
   </div>
 
-  <!-- 3. Atsiliepimo palikimo langas (+rep / -rep) -->
   <div id="reviewModal" class="modal">
     <div class="modal-box">
       <button class="close-x" onclick="closeModals()">&times;</button>
       <h2>⭐ Parašyti atsiliepimą</h2>
-      <p style="font-size: 0.9rem; color: var(--muted);">Jūsų atsiliepimas akimirksniu bus nusiųstas į Discord kanalą <b>#atsiliepimai</b>.</p>
-      
       <div class="form-group">
         <label>Įvertinimas:</label>
         <div class="rep-selector">
-          <div class="rep-option pos active" onclick="setRepType('+rep', this)">+rep (Teigiamas)</div>
-          <div class="rep-option neg" onclick="setRepType('-rep', this)">-rep (Neigiamas)</div>
+          <div class="rep-option pos active" onclick="setRepType('+rep', this)">+rep</div>
+          <div class="rep-option neg" onclick="setRepType('-rep', this)">-rep</div>
         </div>
       </div>
-
-      <div class="form-group">
-        <label>Jūsų Discord slapyvardis:</label>
-        <input type="text" id="reviewerName" class="form-control" placeholder="Pvz.: @cucunuts">
-      </div>
-
       <div class="form-group">
         <label>Komentaras:</label>
-        <textarea id="reviewerComment" class="form-control" rows="3" placeholder="Pvz.: Viskas super, gavau per 1 min!"></textarea>
+        <textarea id="reviewerComment" class="form-control" rows="3" placeholder="Pvz.: Viskas super!"></textarea>
       </div>
-
-      <button class="btn" onclick="submitReview()" style="background: var(--success); color: white;">Paskelbti atsiliepimą</button>
+      <button class="btn" onclick="submitReview()" style="background: var(--success); color: white;">Paskelbti į Discord</button>
     </div>
   </div>
 
   <script>
+    let discordUser = null;
     let currentItem = '';
     let currentCode = '';
     let selectedRep = '+rep';
 
+    // Kai puslis užsikrauna, patikriname ar grįžo token iš Discord OAuth2
+    window.onload = () => {
+      const fragment = new URLSearchParams(window.location.hash.slice(1));
+      const accessToken = fragment.get('access_token');
+
+      if (accessToken) {
+        fetch('https://discord.com/api/users/@me', {
+          headers: { authorization: `Bearer ${accessToken}` }
+        })
+        .then(res => res.json())
+        .then(data => {
+          discordUser = data;
+          const avatarUrl = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`;
+          document.getElementById('authSection').innerHTML = `
+            <div class="user-bar">
+              <img src="${avatarUrl}" alt="Avatar">
+              <span><b>${data.username}</b> (Prisijungta)</span>
+            </div>
+          `;
+        });
+      }
+    };
+
     function openCheckout(itemName, itemCode) {
+      if (!discordUser) {
+        alert('❌ Norėdami pirkti, pirmiausia prisijunkite su Discord viršuje!');
+        return;
+      }
       currentItem = itemName;
       currentCode = itemCode;
       document.getElementById('checkoutItemName').innerText = itemName;
       document.getElementById('checkoutModal').style.display = 'flex';
     }
 
-    function selectPay(btn) {
-      document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-
     function processPayment() {
       document.getElementById('checkoutModal').style.display = 'none';
-      document.getElementById('successItemName').innerText = currentItem;
       document.getElementById('successCode').innerText = currentCode;
       document.getElementById('successModal').style.display = 'flex';
     }
@@ -394,29 +228,41 @@
       document.getElementById('reviewModal').style.display = 'flex';
     }
 
-    function setRepType(type, element) {
+    function setRepType(type, el) {
       selectedRep = type;
-      document.querySelectorAll('.rep-option').forEach(opt => opt.classList.remove('active'));
-      element.classList.add('active');
+      document.querySelectorAll('.rep-option').forEach(o => o.classList.remove('active'));
+      el.classList.add('active');
     }
 
-    function submitReview() {
-      const name = document.getElementById('reviewerName').value.trim() || '@vartotojas';
-      const comment = document.getElementById('reviewerComment').value.trim() || 'Puikus aptarnavimas!';
+    async function submitReview() {
+      const comment = document.getElementById('reviewerComment').value.trim() || 'Puiku!';
       
-      // Čia simuliuojame atsiliepimo išsiuntimą (realiame serveryje tai keliautų į Discord botą per Webhook / API)
-      alert(`✅ Atsiliepimas (${selectedRep}) sėkmingai išsiųstas į Discord kanalą #atsiliepimai!\nAčiū, kad pirkote.`);
-      closeModals();
+      // Siunčiame tiesiai į mūsų botą, kuris įrašys į Discord #atsiliepimai kanalą
+      try {
+        const res = await fetch('http://localhost:3000/api/review', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: discordUser.username,
+            item: currentItem,
+            type: selectedRep,
+            comment: comment
+          })
+        });
+
+        if (res.ok) {
+          alert('✅ Atsiliepimas sėkmingai paskelbtas Discord serveryje!');
+          closeModals();
+        } else {
+          alert('❌ Klaida siunčiant atsiliepimą.');
+        }
+      } catch (err) {
+        alert('❌ Nepavyko susisiekti su serveriu.');
+      }
     }
 
     function closeModals() {
       document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-    }
-
-    function copyResultCode() {
-      const codeText = document.getElementById('successCode').innerText;
-      navigator.clipboard.writeText(codeText);
-      alert('Kodas sėkmingai nukopijuotas į iškarpinę!');
     }
   </script>
 </body>
