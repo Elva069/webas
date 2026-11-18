@@ -3,213 +3,224 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Shop • Oficiali Parduotuvė</title>
+  <title>Stocky • Resell Shop</title>
   <style>
     :root {
-      --bg: #090d16;
-      --card-bg: #131c31;
-      --accent: #38bdf8;
-      --accent-hover: #0ea5e9;
-      --success: #22c55e;
-      --danger: #ef4444;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --border: #1e293b;
+      --bg: #09090b;
+      --card-bg: #121217;
+      --accent: #22c55e;
+      --accent-hover: #16a34a;
+      --border: #27272a;
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
     }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       margin: 0;
-      padding: 30px 20px;
-      text-align: center;
-      background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, var(--bg) 70%);
-      min-height: 100vh;
+      padding: 0;
     }
 
     #loginOverlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(9, 13, 22, 0.95); backdrop-filter: blur(10px);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000;
+      background: var(--bg); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 2000;
     }
-    #loginOverlay h1 { color: var(--accent); font-size: 3rem; margin-bottom: 10px; text-shadow: 0 0 20px rgba(56,189,248,0.3); }
-    #loginOverlay p { color: var(--muted); margin-bottom: 30px; font-size: 1.1rem; }
-
+    #loginOverlay h1 { color: var(--accent); font-size: 2.5rem; margin-bottom: 10px; }
+    #loginOverlay p { color: var(--muted); margin-bottom: 30px; }
     .login-btn {
-      background: #5865F2; color: white; padding: 14px 28px; border-radius: 14px;
-      text-decoration: none; font-weight: bold; font-size: 1.1rem; display: inline-flex;
-      align-items: center; gap: 10px; transition: 0.3s; box-shadow: 0 10px 25px -5px rgba(88, 101, 242, 0.5);
+      background: #5865F2; color: white; padding: 12px 24px; border-radius: 10px;
+      text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s;
     }
-    .login-btn:hover { background: #4752C4; transform: translateY(-3px); box-shadow: 0 15px 30px -5px rgba(88, 101, 242, 0.7); }
+    .login-btn:hover { background: #4752C4; }
 
-    .container { max-width: 1000px; margin: 0 auto; display: none; animation: fadeIn 0.6s ease-out; }
-    
-    .header-bar {
+    header {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 40px; background: var(--card-bg); padding: 15px 30px;
-      border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      padding: 18px 40px; background: var(--bg); border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 1000;
     }
-    .header-bar h1 { color: var(--accent); margin: 0; font-size: 1.8rem; letter-spacing: 0.5px; }
-
-    .user-profile { display: flex; align-items: center; gap: 12px; }
-    .user-profile img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
-    .user-profile span { font-weight: bold; color: var(--text); }
-
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: var(--text); }
+    .logo span { background: var(--accent); color: black; padding: 4px 8px; border-radius: 6px; font-size: 0.9rem; }
     
-    .card {
-      background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
-      overflow: hidden; text-align: left; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; display: flex; flex-direction: column;
+    nav { display: flex; gap: 25px; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: 0.2s; }
+    nav a:hover, nav a.active { color: var(--text); }
+
+    .user-pill {
+      display: flex; align-items: center; gap: 10px; background: var(--card-bg);
+      padding: 6px 14px; border-radius: 30px; border: 1px solid var(--border); font-size: 0.9rem; font-weight: 600;
     }
-    .card:hover { border-color: var(--accent); transform: translateY(-8px); box-shadow: 0 20px 40px -15px rgba(56, 189, 248, 0.25); }
-    
-    .card-img-container { width: 100%; height: 180px; overflow: hidden; background: #0b1120; position: relative; }
-    .card-img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-    .card:hover .card-img-container img { transform: scale(1.08); }
+    .user-pill img { width: 28px; height: 28px; border-radius: 50%; }
 
-    .card-content { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
-    .card h3 { margin: 0 0 10px 0; color: var(--text); font-size: 1.4rem; }
-    .card p { color: var(--muted); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5; flex-grow: 1; }
+    .main-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; display: none; }
     
-    .price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 20px; }
-    .old-price { font-size: 1rem; color: var(--muted); text-decoration: line-through; }
-    .price { font-size: 1.8rem; font-weight: 800; color: var(--success); }
-    
-    .btn {
-      background: var(--accent); color: #090d16; border: none; padding: 14px 20px;
-      border-radius: 12px; cursor: pointer; font-weight: 700; width: 100%; font-size: 1rem; transition: 0.2s;
+    .section-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 5px; }
+    .section-desc { color: var(--muted); font-size: 0.95rem; margin-bottom: 25px; }
+
+    .filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
+    .filter-btn {
+      background: var(--card-bg); border: 1px solid var(--border); color: var(--muted);
+      padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; cursor: pointer; transition: 0.2s; font-weight: 500;
     }
-    .btn:hover { background: var(--accent-hover); box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); }
+    .filter-btn:hover, .filter-btn.active { background: #27272a; color: var(--text); border-color: #3f3f46; }
+
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    
+    .product-card {
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+      overflow: hidden; transition: 0.3s; display: flex; flex-direction: column;
+    }
+    .product-card:hover { border-color: #3f3f46; transform: translateY(-4px); }
+
+    .product-img { width: 100%; height: 220px; background: #18181b; position: relative; overflow: hidden; }
+    .product-img img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .badge {
+      position: absolute; top: 12px; left: 12px; padding: 4px 10px; border-radius: 6px;
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    }
+    .badge.stock { background: rgba(34, 197, 94, 0.2); color: var(--accent); border: 1px solid rgba(34, 197, 94, 0.3); }
+    .badge.sold { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    .product-info { padding: 16px; display: flex; flex-direction: column; flex-grow: 1; }
+    .product-name { font-weight: 600; font-size: 1rem; margin-bottom: 8px; }
+    .product-price { font-weight: 700; font-size: 1.1rem; color: var(--text); margin-bottom: 14px; }
+    
+    .buy-btn {
+      background: var(--accent); color: black; border: none; padding: 10px; border-radius: 8px;
+      font-weight: 700; width: 100%; cursor: pointer; transition: 0.2s; margin-top: auto;
+    }
+    .buy-btn:hover { background: var(--accent-hover); }
 
     .modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(9, 13, 22, 0.85); backdrop-filter: blur(10px);
-      align-items: center; justify-content: center; z-index: 2000; animation: fadeIn 0.3s ease;
+      background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); align-items: center; justify-content: center; z-index: 3000;
     }
     .modal-box {
-      background: var(--card-bg); padding: 35px; border-radius: 24px; max-width: 480px;
-      width: 90%; border: 1px solid var(--accent); text-align: left; position: relative;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.5); animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      background: var(--card-bg); padding: 30px; border-radius: 16px; max-width: 440px; width: 90%;
+      border: 1px solid var(--border); position: relative; text-align: left;
     }
-    .modal-box h2 { color: var(--accent); margin-top: 0; }
-    .close-x { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--muted); font-size: 1.8rem; cursor: pointer; transition: 0.2s; }
-    .close-x:hover { color: var(--text); }
+    .modal-box h2 { margin-top: 0; color: var(--text); font-size: 1.4rem; }
+    .close-x { position: absolute; top: 18px; right: 20px; background: none; border: none; color: var(--muted); font-size: 1.5rem; cursor: pointer; }
     
-    .result-box {
-      background: #090d16; padding: 16px; border-radius: 14px; font-family: monospace;
-      color: var(--success); margin: 15px 0; word-break: break-all; border: 1px dashed var(--success); text-align: center; font-size: 1.1rem;
-    }
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--muted); font-weight: 600; }
-    .form-control { width: 100%; background: #090d16; border: 1px solid var(--border); color: var(--text); padding: 14px; border-radius: 12px; box-sizing: border-box; font-family: inherit; }
-    .form-control:focus { outline: none; border-color: var(--accent); }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; }
+    .form-control { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 10px; border-radius: 8px; box-sizing: border-box; }
     
-    .rep-selector { display: flex; gap: 12px; }
+    .rep-selector { display: flex; gap: 10px; }
     .rep-option {
-      flex: 1; padding: 12px; border-radius: 12px; border: 1px solid var(--border);
-      background: #090d16; color: var(--text); cursor: pointer; font-weight: bold; text-align: center; transition: 0.2s;
+      flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--bg); color: var(--text); cursor: pointer; font-weight: bold; text-align: center;
     }
-    .rep-option.pos.active { background: rgba(34, 197, 94, 0.15); border-color: var(--success); color: var(--success); }
-    .rep-option.neg.active { background: rgba(239, 68, 68, 0.15); border-color: var(--danger); color: var(--danger); }
-
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes scaleUp { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    .rep-option.pos.active { background: rgba(34, 197, 94, 0.2); border-color: var(--accent); color: var(--accent); }
+    .rep-option.neg.active { background: rgba(239, 68, 68, 0.2); border-color: #ef4444; color: #ef4444; }
   </style>
 </head>
 <body>
 
-  <!-- Prisijungimo ekranas -->
   <div id="loginOverlay">
-    <h1>🛒 EL SHOP</h1>
-    <p>Prisijunkite su savo Discord paskyra, kad patektumėte į parduotuvę.</p>
+    <h1>📦 Stocky Resell</h1>
+    <p>Prisijunkite su savo Discord paskyra, kad pasiektumėte katalogą.</p>
     <a href="https://discord.com/api/oauth2/authorize?client_id=1534503167214096595&redirect_uri=https%3A%2F%2Fwebas-alpha.vercel.app&response_type=token&scope=identify" class="login-btn">
       Prisijungti su Discord
     </a>
   </div>
 
-  <!-- Pagrindinė parduotuvė -->
-  <div class="container" id="mainContent">
-    <div class="header-bar">
-      <h1>🛒 EL SHOP</h1>
-      <div class="user-profile" id="userProfileArea"></div>
+  <div class="main-container" id="mainContainer">
+    <header style="margin: -40px -20px 40px -20px;">
+      <div class="logo">📦 Stocky <span>STORE</span></div>
+      <nav>
+        <a class="active">Produktai[cite: 4]</a>
+        <a>Metodai[cite: 4]</a>
+        <a>Tiekėjai[cite: 4]</a>
+        <a>Akademija[cite: 4]</a>
+      </nav>
+      <div class="user-pill" id="userProfileArea"></div>
+    </header>
+
+    <div class="section-title">Produktai[cite: 4]</div>
+    <div class="section-desc">Čia rasi produktus iš mūsų katalogo – asortimentą nuolat pildome naujomis prekėmis.[cite: 4]</div>
+
+    <div class="filters">
+      <button class="filter-btn active">📦 In Stock[cite: 4]</button>
+      <button class="filter-btn">🕶️ Akiniai[cite: 4]</button>
+      <button class="filter-btn">💼 Piniginės[cite: 4]</button>
+      <button class="filter-btn">🎒 Kuprinės[cite: 4]</button>
+      <button class="filter-btn">👜 Rankinės[cite: 4]</button>
+      <button class="filter-btn">💍 Apyrankė[cite: 4]</button>
     </div>
 
-    <div class="grid">
-      <!-- 1 Prekė -->
-      <div class="card">
-        <div class="card-img-container">
-          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="Nitro">
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img">
+          <span class="badge stock">In Stock[cite: 4]</span>
+          <img src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=500&q=80" alt="Puffer">
         </div>
-        <div class="card-content">
-          <h3>Discord Nitro (1 mėn.)</h3>
-          <p>Pilna Nitro prenumerata su Boostais. Aktyvuojama iškart po apmokėjimo.</p>
-          <div class="price-row">
-            <span class="old-price">14.99 €</span>
-            <span class="price">9.00 €</span>
-          </div>
-          <button class="btn" onclick="openCheckout('Discord Nitro (1 mėn.)', 'NITRO-GIFT-9842-PAID-2026')">Pirkti už 9 €</button>
+        <div class="product-info">
+          <div class="product-name">Burberry Puffer Jacket 3[cite: 4]</div>
+          <div class="product-price">€65.00[cite: 4]</div>
+          <button class="buy-btn" onclick="openCheckout('Burberry Puffer Jacket 3')">Pirkti</button>
         </div>
       </div>
 
-      <!-- 2 Prekė -->
-      <div class="card">
-        <div class="card-img-container">
-          <img src="https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&w=600&q=80" alt="Spotify">
+      <div class="product-card">
+        <div class="product-img">
+          <span class="badge stock">In Stock[cite: 4]</span>
+          <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=500&q=80" alt="Ralph Lauren">
         </div>
-        <div class="card-content">
-          <h3>Spotify Premium (12 mėn.)</h3>
-          <p>Individualus planas be jokių reklamų visjiems metams.</p>
-          <div class="price-row">
-            <span class="old-price">19.99 €</span>
-            <span class="price">9.00 €</span>
-          </div>
-          <button class="btn" onclick="openCheckout('Spotify Premium (12 mėn.)', 'SPOTIFY-PREM-CODE-7731-LT')">Pirkti už 9 €</button>
+        <div class="product-info">
+          <div class="product-name">Ralph Lauren Puffer Jacket[cite: 4]</div>
+          <div class="product-price">€65.00[cite: 4]</div>
+          <button class="buy-btn" onclick="openCheckout('Ralph Lauren Puffer Jacket')">Pirkti</button>
         </div>
       </div>
 
-      <!-- 3 Prekė -->
-      <div class="card">
-        <div class="card-img-container">
-          <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80" alt="VIP">
+      <div class="product-card">
+        <div class="product-img">
+          <span class="badge stock">In Stock[cite: 4]</span>
+          <img src="https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=500&q=80" alt="TNF">
         </div>
-        <div class="card-content">
-          <h3>VIP Prieiga + 1000 XP</h3>
-          <p>Išskirtinės teisės mūsų bendruomenėje, nuolaidos ir papildomi XP taškai.</p>
-          <div class="price-row">
-            <span class="old-price">15.00 €</span>
-            <span class="price">9.00 €</span>
-          </div>
-          <button class="btn" onclick="openCheckout('VIP Prieiga + 1000 XP', 'VIP-ACCESS-KEY-5519-ELSHOP')">Pirkti už 9 €</button>
+        <div class="product-info">
+          <div class="product-name">TNF Puffer Jacket[cite: 4]</div>
+          <div class="product-price">€50.00[cite: 4]</div>
+          <button class="buy-btn" onclick="openCheckout('TNF Puffer Jacket')">Pirkti</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <span class="badge sold">Išparduota[cite: 4]</span>
+          <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=500&q=80" alt="Bag">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Nike Elite Bag[cite: 4]</div>
+          <div class="product-price">€35.00[cite: 4]</div>
+          <button class="buy-btn" style="background:#27272a; color:#a1a1aa; cursor:not-allowed;">Išparduota[cite: 4]</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Apmokėjimo langas -->
   <div id="checkoutModal" class="modal">
     <div class="modal-box">
       <button class="close-x" onclick="closeModals()">&times;</button>
       <h2>🔒 Saugus apmokėjimas</h2>
-      <p>Prekė: <b id="checkoutItemName" style="color: var(--text);"></b></p>
-      <p>Suma: <b style="color: var(--success);">9.00 €</b></p>
-      <button class="btn" onclick="processPayment()" style="background: var(--success); color: white; margin-top: 20px;">Apmokėti 9.00 €</button>
+      <p style="color: var(--muted); font-size: 0.9rem;">Prekė: <b id="checkoutItemName" style="color: white;"></b></p>
+      <button class="buy-btn" onclick="processPayment()" style="margin-top: 15px;">Patvirtinti užsakymą</button>
     </div>
   </div>
 
-  <!-- Sėkmingo pirkimo langas -->
   <div id="successModal" class="modal">
     <div class="modal-box">
       <button class="close-x" onclick="closeModals()">&times;</button>
-      <h2>🎉 Apmokėjimas sėkmingas!</h2>
-      <p style="color: var(--muted); font-size: 0.95rem;">Jūsų prekės kodas:</p>
-      <div class="result-box" id="successCode"></div>
-      <button class="btn" onclick="openReviewModal()" style="background: #8b5cf6; color: white;">⭐ Palikti atsiliepimą</button>
+      <h2>🎉 Užsakymas priimtas!</h2>
+      <p style="color: var(--muted); font-size: 0.9rem;">Sėkmingai atsiskaityta. Norite palikti atsiliepimą?</p>
+      <button class="buy-btn" onclick="openReviewModal()" style="margin-top: 15px;">⭐ Palikti atsiliepimą</button>
     </div>
   </div>
 
-  <!-- Atsiliepimo langas -->
   <div id="reviewModal" class="modal">
     <div class="modal-box">
       <button class="close-x" onclick="closeModals()">&times;</button>
@@ -223,16 +234,15 @@
       </div>
       <div class="form-group">
         <label>Komentaras:</label>
-        <textarea id="reviewerComment" class="form-control" rows="3" placeholder="Pvz.: Viskas super, gavau per 1 min!"></textarea>
+        <textarea id="reviewerComment" class="form-control" rows="3" placeholder="Pvz.: Kokybė topinė, rekomenduoja!"></textarea>
       </div>
-      <button class="btn" onclick="submitReview()" style="background: var(--success); color: white;">Paskelbti į Discord</button>
+      <button class="buy-btn" onclick="submitReview()">Paskelbti į Discord</button>
     </div>
   </div>
 
   <script>
     let discordUser = null;
     let currentItem = '';
-    let currentCode = '';
     let selectedRep = '+rep';
 
     window.onload = () => {
@@ -259,7 +269,7 @@
               : 'https://cdn.discord.com/embed/avatars/0.png';
 
             document.getElementById('loginOverlay').style.display = 'none';
-            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('mainContainer').style.display = 'block';
 
             document.getElementById('userProfileArea').innerHTML = `
               <img src="${avatarUrl}" alt="Avatar">
@@ -269,22 +279,18 @@
             sessionStorage.removeItem('discord_token');
           }
         })
-        .catch(() => {
-          sessionStorage.removeItem('discord_token');
-        });
+        .catch(() => sessionStorage.removeItem('discord_token'));
       }
     };
 
-    function openCheckout(itemName, itemCode) {
+    function openCheckout(itemName) {
       currentItem = itemName;
-      currentCode = itemCode;
       document.getElementById('checkoutItemName').innerText = itemName;
       document.getElementById('checkoutModal').style.display = 'flex';
     }
 
     function processPayment() {
       document.getElementById('checkoutModal').style.display = 'none';
-      document.getElementById('successCode').innerText = currentCode;
       document.getElementById('successModal').style.display = 'flex';
     }
 
@@ -300,7 +306,7 @@
     }
 
     async function submitReview() {
-      const comment = document.getElementById('reviewerComment').value.trim() || 'Puiku!';
+      const comment = document.getElementById('reviewerComment'].value.trim() || 'Viskas super!';
       const API_URL = 'http://localhost:3000/api/review';
 
       try {
@@ -308,6 +314,7 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            discordId: discordUser.id,
             username: discordUser.username,
             item: currentItem,
             type: selectedRep,
@@ -316,7 +323,7 @@
         });
 
         if (res.ok) {
-          alert('✅ Atsiliepimas sėkmingai paskelbtas Discord serveryje!');
+          alert('✅ Atsiliepimas sėkmingai paskelbtas Discord serveryje su tavo paminėjimu!');
           closeModals();
         } else {
           alert('❌ Klaida siunčiant atsiliepimą.');
