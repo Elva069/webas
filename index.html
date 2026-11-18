@@ -13,79 +13,125 @@
     .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; transition: 0.2s; text-align: left; }
     .card:hover { border-color: #38bdf8; transform: translateY(-4px); }
     .card h3 { margin-top: 0; color: #f8fafc; }
-    .price { font-size: 1.2rem; font-weight: bold; color: #22c55e; margin: 15px 0; }
+    .old-price { font-size: 0.9rem; color: #64748b; text-decoration: line-through; }
+    .price { font-size: 1.4rem; font-weight: bold; color: #22c55e; margin: 10px 0 15px 0; }
     .btn { background: #2563eb; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; }
     .btn:hover { background: #1d4ed8; }
     
-    /* Iššokantis langas (Modal) */
-    #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 100; }
+    /* Iššokantys langai (Modal) */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 100; }
     .modal-box { background: #1e293b; padding: 30px; border-radius: 12px; max-width: 450px; width: 90%; border: 1px solid #38bdf8; text-align: left; position: relative; }
     .modal-box h2 { color: #38bdf8; margin-top: 0; }
     .result-box { background: #0f172a; padding: 15px; border-radius: 8px; font-family: monospace; color: #22c55e; margin: 15px 0; word-break: break-all; border: 1px dashed #22c55e; font-size: 1.1rem; text-align: center; }
     .close-x { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; }
     .close-x:hover { color: white; }
+    .pay-methods { display: flex; gap: 10px; margin: 15px 0; }
+    .pay-btn { flex: 1; background: #334155; border: 2px solid transparent; color: white; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .pay-btn.active { border-color: #38bdf8; background: #1e293b; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>🛒 EL SHOP</h1>
-    <p class="sub">Oficiali skaitmeninių prekių parduotuvė • Viskas gaunama iškart ekrane!</p>
+    <p class="sub">Oficiali skaitmeninių prekių parduotuvė • Saugus atsiskaitymas ir momentinis pristatymas</p>
     
     <div class="grid">
       <!-- 1 Prekė -->
       <div class="card">
         <h3>Discord Nitro (1 mėn.)</h3>
-        <p style="color: #94a3b8; font-size: 0.9rem;">Pilna Nitro prenumerata su Boostais. Pristatymas iškart.</p>
-        <div class="price">NEMOKAMAI (0.00 €)</div>
-        <button class="btn" onclick="buyItem('Discord Nitro (1 mėn.)', 'NITRO-GIFT-9842-FREE-2026')">Pirkti / Gauti iškart</button>
+        <p style="color: #94a3b8; font-size: 0.9rem;">Pilna Nitro prenumerata su Boostais. Pristatymas iškart po apmokėjimo.</p>
+        <div class="old-price">14.99 €</div>
+        <div class="price">9.00 €</div>
+        <button class="btn" onclick="openCheckout('Discord Nitro (1 mėn.)', 'NITRO-GIFT-9842-PAID-2026')">Pirkti už 9 €</button>
       </div>
 
       <!-- 2 Prekė -->
       <div class="card">
         <h3>Spotify Premium (12 mėn.)</h3>
-        <p style="color: #94a3b8; font-size: 0.9rem;">Individualus planas be jokių reklamų.</p>
-        <div class="price">NEMOKAMAI (0.00 €)</div>
-        <button class="btn" onclick="buyItem('Spotify Premium (12 mėn.)', 'SPOTIFY-PREM-CODE-7731-LT')">Pirkti / Gauti iškart</button>
+        <p style="color: #94a3b8; font-size: 0.9rem;">Individualus planas be jokių reklamų. Metų abonementas.</p>
+        <div class="old-price">19.99 €</div>
+        <div class="price">9.00 €</div>
+        <button class="btn" onclick="openCheckout('Spotify Premium (12 mėn.)', 'SPOTIFY-PREM-CODE-7731-LT')">Pirkti už 9 €</button>
       </div>
 
       <!-- 3 Prekė -->
       <div class="card">
         <h3>VIP Prieiga + 1000 XP</h3>
-        <p style="color: #94a3b8; font-size: 0.9rem;">Išskirtinės teisės ir privilegijos parduotuvėje.</p>
-        <div class="price">NEMOKAMAI (0.00 €)</div>
-        <button class="btn" onclick="buyItem('VIP Prieiga + 1000 XP', 'VIP-ACCESS-KEY-5519-ELSHOP')">Pirkti / Gauti iškart</button>
+        <p style="color: #94a3b8; font-size: 0.9rem;">Išskirtinės teisės ir privilegijos mūsų bendruomenėje.</p>
+        <div class="old-price">15.00 €</div>
+        <div class="price">9.00 €</div>
+        <button class="btn" onclick="openCheckout('VIP Prieiga + 1000 XP', 'VIP-ACCESS-KEY-5519-ELSHOP')">Pirkti už 9 €</button>
       </div>
     </div>
   </div>
 
-  <!-- Rezultato langas -->
-  <div id="modal">
+  <!-- Mokėjimo langas (Checkout Modal) -->
+  <div id="checkoutModal" class="modal">
     <div class="modal-box">
-      <button class="close-x" onclick="closeModal()">&times;</button>
-      <h2>🎉 Užsakymas sėkmingas!</h2>
-      <p>Jūsų įsigyta prekė: <b id="boughtItemName" style="color: #f8fafc;"></b></p>
-      <p style="font-size: 0.9rem; color: #94a3b8;">Jūsų slapta prekė / aktyvacijos kodas:</p>
+      <button class="close-x" onclick="closeModals()">&times;</button>
+      <h2>🔒 Saugus apmokėjimas</h2>
+      <p>Prekė: <b id="checkoutItemName" style="color: #f8fafc;"></b></p>
+      <p>Suma apmokėjimui: <b style="color: #22c55e;">9.00 €</b></p>
       
-      <div class="result-box" id="boughtCode"></div>
+      <p style="font-size: 0.9rem; color: #94a3b8; margin-top: 15px;">Pasirinkite mokėjimo būdą:</p>
+      <div class="pay-methods">
+        <button class="pay-btn active" onclick="selectPay(this)">Bankas</button>
+        <button class="pay-btn" onclick="selectPay(this)">Revolut</button>
+        <button class="pay-btn" onclick="selectPay(this)">PayPal</button>
+      </div>
+
+      <button class="btn" onclick="processPayment()" style="background: #22c55e; margin-top: 10px;">Apmokėti 9.00 €</button>
+    </div>
+  </div>
+
+  <!-- Prekės gavimo langas (Success Modal) -->
+  <div id="successModal" class="modal">
+    <div class="modal-box">
+      <button class="close-x" onclick="closeModals()">&times;</button>
+      <h2>🎉 Apmokėjimas sėkmingas!</h2>
+      <p>Jūsų įsigyta prekė: <b id="successItemName" style="color: #f8fafc;"></b></p>
+      <p style="font-size: 0.9rem; color: #94a3b8;">Štai jūsų slapta prekė / aktyvacijos kodas:</p>
+      
+      <div class="result-box" id="successCode"></div>
       
       <button class="btn" onclick="copyResultCode()" style="background: #16a34a; margin-bottom: 10px;">Nukopijuoti kodą</button>
-      <button class="btn" onclick="closeModal()" style="background: #475569;">Uždaryti</button>
+      <button class="btn" onclick="closeModals()" style="background: #475569;">Uždaryti</button>
     </div>
   </div>
 
   <script>
-    function buyItem(itemName, itemCode) {
-      document.getElementById('boughtItemName').innerText = itemName;
-      document.getElementById('boughtCode').innerText = itemCode;
-      document.getElementById('modal').style.display = 'flex';
+    let currentItem = '';
+    let currentCode = '';
+
+    function openCheckout(itemName, itemCode) {
+      currentItem = itemName;
+      currentCode = itemCode;
+      document.getElementById('checkoutItemName').innerText = itemName;
+      document.getElementById('checkoutModal').style.display = 'flex';
     }
 
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
+    function selectPay(btn) {
+      document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function processPayment() {
+      // Simuliuojame trumpą apmokėjimo procesą
+      document.getElementById('checkoutModal').style.display = 'none';
+      
+      // Atidarome sėkmingo apmokėjimo langą su kodu
+      document.getElementById('successItemName').innerText = currentItem;
+      document.getElementById('successCode').innerText = currentCode;
+      document.getElementById('successModal').style.display = 'flex';
+    }
+
+    function closeModals() {
+      document.getElementById('checkoutModal').style.display = 'none';
+      document.getElementById('successModal').style.display = 'none';
     }
 
     function copyResultCode() {
-      const codeText = document.getElementById('boughtCode').innerText;
+      const codeText = document.getElementById('successCode').innerText;
       navigator.clipboard.writeText(codeText);
       alert('Kodas sėkmingai nukopijuotas į iškarpinę!');
     }
